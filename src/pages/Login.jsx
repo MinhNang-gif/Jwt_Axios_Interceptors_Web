@@ -8,22 +8,28 @@ import Alert from '@mui/material/Alert'
 import { useForm } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import TrungQuanDevIcon from '../assets/trungquandev-logo.png'
-import axios from 'axios'
-import { toast } from 'react-toastify'
 import { API_ROOT } from '~/utils/constants'
+import authorizedAxiosInstance from '~/utils/authorizedAxios'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const navigate = useNavigate()
 
   const submitLogIn = async (data) => {
-    console.log('submit login: ', data)
-    try {
-      const res = await axios.post(`${API_ROOT}/v1/users/login`, data)
-      console.log(res.data)
-      toast.success(res.data?.message)
-    } catch (error) {
-      toast.error(error.response?.data?.message || error?.message)
+    const res = await authorizedAxiosInstance.post(`${API_ROOT}/v1/users/login`, data)
+
+    // Luu tokens va thong tin user vao Local Storage
+    const userInfo = {
+      id: res.data.id,
+      email: res.data.email
     }
+    localStorage.setItem('accessToken', res.data.accessToken)
+    localStorage.setItem('refreshToken', res.data.refreshToken)
+    localStorage.setItem('userInfo', JSON.stringify(userInfo)) // JSON.stringify de chuyen JSON Object va String de luu duoc vao Local Storage
+
+    // Dieu huong vao trang dashboard
+    navigate('/dashboard')
   }
 
   return (
