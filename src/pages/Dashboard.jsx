@@ -6,18 +6,52 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
 import { API_ROOT } from '~/utils/constants'
 import authorizedAxiosInstance from '~/utils/authorizedAxios'
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom'
+import { logoutAPI } from '~/apis'
 
 function Dashboard() {
   const [user, setUser] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
-      console.log(res.data)
       setUser(res.data)
     }
     fetchData()
   }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
+      setUser(res.data)
+    }
+    fetchData()
+  }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
+      setUser(res.data)
+    }
+    fetchData()
+  }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
+      setUser(res.data)
+    }
+    fetchData()
+  }, [])
+
+  const handleLogout = async () => {
+    // Call API logout
+    await logoutAPI()
+    // Truong hop dung cookie thi can xoa userInfo trong localStorage
+    // localStorage.removeItem('userInfo')
+
+    // Logout thanh cong thi dieu huong ve trang Login
+    navigate('/login')
+  }
 
   if (!user) {
     return (
@@ -49,6 +83,21 @@ function Dashboard() {
         <Typography variant="span" sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}>{user?.email}</Typography>
         &nbsp; đăng nhập thành công thì mới cho truy cập vào.
       </Alert>
+
+      <Button
+        type='button'
+        variant='contained'
+        color='info'
+        size='large'
+        sx={{
+          mt: 2,
+          maxWidth: 'min-content',
+          alignSelf: 'flex-end'
+        }}
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
 
       <Divider sx={{ my: 2 }} />
     </Box>
