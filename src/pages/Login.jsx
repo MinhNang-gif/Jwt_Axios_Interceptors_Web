@@ -8,24 +8,24 @@ import Alert from '@mui/material/Alert'
 import { useForm } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import TrungQuanDevIcon from '../assets/trungquandev-logo.png'
-import { API_ROOT } from '~/utils/constants'
-import authorizedAxiosInstance from '~/utils/authorizedAxios'
 import { useNavigate } from 'react-router-dom'
+import { loginAPI } from '~/apis'
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const navigate = useNavigate()
 
   const submitLogIn = async (data) => {
-    const res = await authorizedAxiosInstance.post(`${API_ROOT}/v1/users/login`, data)
+    // Call API login
+    const res = await loginAPI(data)
 
     // Luu tokens va thong tin user vao Local Storage
     const userInfo = {
-      id: res.data.id,
-      email: res.data.email
+      _id: res._id,
+      email: res.email
     }
-    localStorage.setItem('accessToken', res.data.accessToken)
-    localStorage.setItem('refreshToken', res.data.refreshToken)
+    localStorage.setItem('accessToken', res.accessToken)
+    localStorage.setItem('refreshToken', res.refreshToken)
     localStorage.setItem('userInfo', JSON.stringify(userInfo)) // JSON.stringify de chuyen JSON Object va String de luu duoc vao Local Storage
 
     // Dieu huong vao trang dashboard
@@ -39,7 +39,7 @@ function Login() {
       minHeight: '100vh',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      background: 'url("src/assets/trungquandev-bg-img.jpeg")',
+      background: 'url("src/assets/minhnang-bg.jpg")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -49,12 +49,12 @@ function Login() {
         <Zoom in={true} style={{ transitionDelay: '200ms' }}>
           <MuiCard sx={{ minWidth: 380, maxWidth: 380, marginTop: '6em', p: '0.5em 0', borderRadius: 2 }}>
             <Box sx={{ width: '70px', bgcolor: 'white', margin: '0 auto' }}>
-              <img src={TrungQuanDevIcon} alt='trungquandev' width='100%' />
+              <img src={TrungQuanDevIcon} alt='minhnang' width='100%' />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', color: theme => theme.palette.grey[500] }}>
               <Box>
-                <Typography>Hint: trungquandev.official@gmail.com</Typography>
-                <Typography>Pass: trungquandev@123</Typography>
+                <Typography>Hint: minhnanguit@gmail.com</Typography>
+                <Typography>Pass: minhnanguit@gm</Typography>
               </Box>
             </Box>
             <Box sx={{ padding: '0 1em 1em 1em' }}>

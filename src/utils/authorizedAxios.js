@@ -31,7 +31,7 @@ authorizedAxiosInstance.interceptors.request.use((config) => {
 
 
 // Khoi tao mot cai promise cho viec goi api refresh token
-// Muc dich tao promise nay de khi nhan yeu cau refresh token dau tien thi se giu lai cai API refresh token cho den khi no thuc hien xong xuoi
+// Muc dich tao promise nay de khi nhan yeu cau refresh token dau tien thi se hold lai cai API refresh token cho den khi no thuc hien xong xuoi
 // thi moi retry lai cac api bi loi truoc do thay vi viec goi API refresh token lien tuc tuong ung voi cac API loi
 let refreshTokenPromise = null
 

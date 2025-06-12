@@ -4,11 +4,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
-import { API_ROOT } from '~/utils/constants'
-import authorizedAxiosInstance from '~/utils/authorizedAxios'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
-import { logoutAPI } from '~/apis'
+import { accessAPI, logoutAPI } from '~/apis'
 
 function Dashboard() {
   const [user, setUser] = useState(null)
@@ -16,29 +14,10 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
-      setUser(res.data)
-    }
-    fetchData()
-  }, [])
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
-      setUser(res.data)
-    }
-    fetchData()
-  }, [])
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
-      setUser(res.data)
-    }
-    fetchData()
-  }, [])
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/dashboards/access`)
-      setUser(res.data)
+      await accessAPI()
+        .then(res => {
+          setUser(res)
+        })
     }
     fetchData()
   }, [])
